@@ -9,7 +9,7 @@ public class PercolationTest {
     
     @Before
     public void setUp() {
-        percolation = new Percolation(N);
+        percolation = new Percolation(2);
     }
     
     @Test(expected=IllegalArgumentException.class)
@@ -42,5 +42,15 @@ public class PercolationTest {
         assertFalse(percolation.isOpen(1, 1));
         percolation.open(1, 1);
         assertTrue(percolation.isOpen(1, 1));
+    }
+    
+    @Test
+    public void testAGivenSiteIsFullyOpen() {
+        percolation.open(1, 1);
+        percolation.open(2, 2);
+        assertFalse(percolation.isFull(2,2));
+        
+        percolation.open(1, 2);
+        assertTrue(percolation.isFull(2,2));
     }
 }
