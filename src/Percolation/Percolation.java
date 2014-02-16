@@ -53,7 +53,17 @@ public class Percolation {
     
     // Indicates if the system percolates
     public boolean percolates() {
-        return false;
+        int row = n;
+        boolean connectedToTop = false;
+        
+        for(int col=1; col<=n; col++) {
+            if (isOpen(row, col) && isFull(row, col)) {
+                connectedToTop = true;
+                break;
+            }
+        }
+        
+        return connectedToTop;
     }
     
     // Grid boundaries from (1,1) to (n,n)

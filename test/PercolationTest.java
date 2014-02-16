@@ -53,4 +53,13 @@ public class PercolationTest {
         percolation.open(1, 2);
         assertTrue(percolation.isFull(2,2));
     }
+    
+    @Test
+    public void testTheWholeSystemPercolates() {
+        percolation.open(2, 2);
+        assertFalse(percolation.percolates());
+        
+        percolation.open(1, 2);
+        assertTrue(percolation.percolates());
+    }
 }
