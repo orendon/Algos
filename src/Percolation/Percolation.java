@@ -81,7 +81,6 @@ public class Percolation {
     
     // takes a site, and connect his neighbors
     private void connectNeighbors(int i, int j) {
-        //
         int siteIndex = getSiteIndex(i, j);
         
         // upper site
