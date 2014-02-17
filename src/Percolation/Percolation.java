@@ -5,10 +5,11 @@
  * @author Oscar Rendon
  */
 
+// TODO: Refactor methods in order to avoid for-loops
 public class Percolation {
     
     private int n;
-    private boolean[] sitesStatus;
+    private boolean[][] sitesStatus;
     private WeightedQuickUnionUF sites;
     
     // Create a NxN grid with all sites closed
@@ -17,65 +18,52 @@ public class Percolation {
         
         n = N;
         sites = new WeightedQuickUnionUF(n*n);
-        sitesStatus = new boolean[n*n];
+        sitesStatus = new boolean[n][n];
     }
     
     // Open the site on row i and column j
-    public void open(int i, int j) {
-        int index = getSiteIndex(i, j);
-        
-        if (!sitesStatus[index]) {
+    public void open(int i, int j) {        
+        if (!sitesStatus[i-1][j-1]) {
             connectNeighbors(i, j);
-            sitesStatus[index] = true;
+            sitesStatus[i-1][j-1] = true;
         }
     }
     
     // Check if a given site is open
     public boolean isOpen(int i, int j) {
-        return sitesStatus[getSiteIndex(i, j)];
+        return sitesStatus[i-1][j-1];
     }
     
     // Check if a given  site is fully open
-    public boolean isFull(int i, int j) {        
+    public boolean isFull(int i, int j) {
+        if (!isOpen(i, j)) return false;
+        
         int siteIndex = getSiteIndex(i, j);
         int row = 1;
-        boolean connectedToTop = false;
-        
         for (int col = 1; col <= n; col++) {
             if (isOpen(row, col) && sites.connected(siteIndex, getSiteIndex(row, col))) {
-                connectedToTop = true;
-                break;
+                return true;
             }
         }
         
-        return connectedToTop;
+        return false;
     }
     
     // Indicates if the system percolates
     public boolean percolates() {
         int row = n;
-        boolean connectedToTop = false;
-        
         for (int col = 1; col <= n; col++) {
-            if (isOpen(row, col) && isFull(row, col)) {
-                connectedToTop = true;
-                break;
-            }
+            if (isFull(row, col)) return true;
         }
         
-        return connectedToTop;
+        return false;
     }
     
-    // Grid boundaries from (1,1) to (n,n)
-    private void validateRowRanges(int i, int j) {
-        if (i <= 0 || i > n || j <= 0 || j > n) {
-            throw new IndexOutOfBoundsException("Invalid row, column indices.");
-        }
-    }
-    
-    // Transform matrix index into array index
+    // Transform matrix index into array index, valid range (1,1) => (n,n)
     private int getSiteIndex(int i, int j) {
-        validateRowRanges(i, j);
+        if (i <= 0 || i > n || j <= 0 || j > n)
+            throw new IndexOutOfBoundsException("Invalid row, column indices.");
+        
         return n*(i-1) + j-1;
     }
     
