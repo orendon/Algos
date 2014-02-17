@@ -15,11 +15,18 @@ public class PercolationStatsTest {
     
     @Test(expected=IllegalArgumentException.class)
     public void testZeroGridSize() {
-        PercolationStats stats = new PercolationStats(0, 5);
+        stats = new PercolationStats(0, 5);
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void testZeroExperiments() {
-        PercolationStats stats = new PercolationStats(0, 5);
+        stats = new PercolationStats(1, 0);
+    }
+    
+    @Test
+    public void testUndefinedStandarDeviation() {
+        stats = new PercolationStats(1, 1);
+        
+        assertEquals(Double.NaN, stats.stddev(), 0.01);
     }
 }

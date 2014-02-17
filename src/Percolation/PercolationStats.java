@@ -24,6 +24,8 @@ public class PercolationStats {
     
     // sample standard deviation of percolation threshold
     public double stddev() {
+        if (t == 1) return Double.NaN;
+        
         return 0;
     }
     
@@ -39,5 +41,13 @@ public class PercolationStats {
     
     // test client
     public static void main(String[] args) {
+        int N = Integer.parseInt(args[0]);
+        int T = Integer.parseInt(args[1]);
+        PercolationStats stats = new PercolationStats(N, T);
+                
+        System.out.println("mean                    = " + stats.mean());
+        System.out.println("stdev                   = " + stats.stddev());
+        System.out.println("95% confidence interval = " + stats.confidenceLo()
+                + ", " + stats.confidenceHi());
     }
 }
