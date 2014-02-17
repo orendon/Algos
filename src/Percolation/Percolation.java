@@ -31,7 +31,7 @@ public class Percolation {
     }
     
     // Check if a given site is open
-    public boolean isOpen(int i, int j){
+    public boolean isOpen(int i, int j) {
         return sitesStatus[getSiteIndex(i, j)];
     }
     
@@ -41,7 +41,7 @@ public class Percolation {
         int row = 1;
         boolean connectedToTop = false;
         
-        for(int col=1; col<=n; col++) {
+        for (int col = 1; col <= n; col++) {
             if (isOpen(row, col) && sites.connected(siteIndex, getSiteIndex(row, col))) {
                 connectedToTop = true;
                 break;
@@ -56,7 +56,7 @@ public class Percolation {
         int row = n;
         boolean connectedToTop = false;
         
-        for(int col=1; col<=n; col++) {
+        for (int col = 1; col <= n; col++) {
             if (isOpen(row, col) && isFull(row, col)) {
                 connectedToTop = true;
                 break;
@@ -84,19 +84,19 @@ public class Percolation {
         int siteIndex = getSiteIndex(i, j);
         
         // upper site
-        if(i>1 && isOpen(i-1, j))
+        if (i > 1 && isOpen(i-1, j))
             sites.union(getSiteIndex(i-1, j), siteIndex);
         
         // right site
-        if(j<n && isOpen(i, j+1))
+        if (j < n && isOpen(i, j+1))
             sites.union(getSiteIndex(i, j+1), siteIndex);
         
         // left site
-        if(j>1 && isOpen(i, j-1))
+        if (j > 1 && isOpen(i, j-1))
             sites.union(getSiteIndex(i, j-1), siteIndex);
         
         // down site
-        if(i<n && isOpen(i+1, j))
+        if (i < n && isOpen(i+1, j))
             sites.union(getSiteIndex(i+1, j), siteIndex);
     }
 }
